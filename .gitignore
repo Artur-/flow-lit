@@ -1,0 +1,18 @@
+/target/
+.idea/
+
+.classpath
+.metadata/
+.project
+.settings/
+
+*.iml
+.DS_Store
+
+*.diff
+
+node_modules
+bower_components
+
+# following files are generated/updated by flow-maven
+frontend/main.js
