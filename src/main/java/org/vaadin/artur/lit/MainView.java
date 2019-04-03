@@ -17,13 +17,17 @@ import com.vaadin.flow.router.Route;
 @NpmPackage("github-corner")
 public class MainView extends Component {
 
+    private static int instancesCreated = 0;
+
     public MainView() {
+        instancesCreated++;
         refresh();
     }
 
     @ClientCallable
     public void refresh() {
         getElement().setProperty("serverTime", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        getElement().setProperty("instancesCreated", instancesCreated);
     }
 
 }

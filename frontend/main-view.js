@@ -9,6 +9,7 @@ class MainView extends LitElement {
 
       <div><b>Hello from LitElement</b></div>
       <div>Server Time: ${this.serverTime}</div>
+      <div>MainView instances created on server: ${this.instancesCreated}</div>
       <p>
         <vaadin-button @click="${e => this.$server.refresh()}"
           >Refresh</vaadin-button
