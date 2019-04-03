@@ -14,6 +14,7 @@ import com.vaadin.flow.router.Route;
 @JsModule("main-view.js")
 @Route("")
 @NpmPackage("lit-element")
+@NpmPackage("github-corner")
 public class MainView extends Component {
 
     public MainView() {

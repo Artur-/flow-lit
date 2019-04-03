@@ -1,8 +1,12 @@
 import { html, LitElement } from "lit-element";
-
+import "github-corner";
 class MainView extends LitElement {
   render() {
     return html`
+      <github-corner>
+        <a href="https://github.com/Artur-/flow-lit">GitHub</a>
+      </github-corner>
+
       <div><b>Hello from LitElement</b></div>
       <div>Server Time: ${this.serverTime}</div>
       <p>
