@@ -61,6 +61,13 @@
                 <scope>import</scope>
                 <version>${vaadin.version}</version>
             </dependency>
+             <!-- needed to have a es module fix in the connector-->
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-grid-flow</artifactId>
+                <version>3.1-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
