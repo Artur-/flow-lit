@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.html.NativeButton;
@@ -26,11 +27,11 @@ public class MainView extends LitTemplate<MyModel> {
     private static final String[] lastNames = new String[] { "Davenport", "Suarez", "Morrison" };
 
     @Id
-    public NativeButton hello;
+    public Button hello;
     @Id
-    public NativeButton addString;
+    public Button addString;
     @Id
-    public NativeButton addPerson;
+    public Button addPerson;
     private int personIndex = 1;
 
     public interface MyModel extends TemplateModel {
