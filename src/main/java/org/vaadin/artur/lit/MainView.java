@@ -9,8 +9,6 @@ import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.templatemodel.TemplateModel;
@@ -19,8 +17,6 @@ import org.vaadin.artur.lit.MainView.MyModel;
 
 @Tag("main-view")
 @JsModule("main-view.js")
-@NpmPackage("lit-element")
-@NpmPackage("github-corner")
 public class MainView extends LitTemplate<MyModel> {
 
     private static final String[] firstNames = new String[] { "Nash", "Cade", "Willa", "Joel", "Mechelle" };
