@@ -8,12 +8,14 @@ import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.NpmPackage;
 
 import elemental.json.Json;
 import elemental.json.JsonValue;
 
 @Tag("lit-list")
 @JsModule("lit-list.js")
+@NpmPackage(value="lit-element", version="2.1.0")
 public class LazyList extends Component {
 
     public LazyList() {

@@ -1,20 +1,21 @@
 {
+  "devDependencies": {
+    "webpack": "=4.30.0",
+    "webpack-cli": "=3.3.0",
+    "webpack-dev-server": "=3.3.0",
+    "webpack-babel-multi-target-plugin": "=2.1.0",
+    "copy-webpack-plugin": "=5.0.3"
+  },
   "dependencies": {
     "@polymer/polymer": "=3.1.0",
     "@vaadin/vaadin-app-layout": "=2.0.0",
-    "@vaadin/vaadin-button": "^2.1.5",
+    "@vaadin/vaadin-cookie-consent": "=1.1.1",
     "@vaadin/vaadin-login": "=1.0.0",
+    "@vaadin/vaadin-lumo-styles": "=1.5.0",
+    "@vaadin/vaadin-material-styles": "=1.2.2",
     "@webcomponents/webcomponentsjs": "=2.2.10",
     "github-corner": "=2.0.3",
     "j-elements": "^0.2.1",
-    "lit-element": "=2.1.0",
-    "@vaadin/vaadin-cookie-consent": "=1.1.1"
-  },
-  "devDependencies": {
-    "webpack-babel-multi-target-plugin": "=2.1.0",
-    "copy-webpack-plugin": "=5.0.3",
-    "webpack-cli": "=3.3.0",
-    "webpack": "=4.30.0",
-    "webpack-dev-server": "=3.3.0"
+    "lit-element": "=2.1.0"
   }
 }
