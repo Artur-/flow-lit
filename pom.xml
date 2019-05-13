@@ -61,13 +61,6 @@
                 <scope>import</scope>
                 <version>${vaadin.version}</version>
             </dependency>
-             <!-- needed to have a es module fix in the connector-->
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-grid-flow</artifactId>
-                <version>3.1-SNAPSHOT</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -76,13 +69,21 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-core</artifactId>
         </dependency>
-        <!-- Added to provide logging output as Flow uses -->
-        <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
+        <dependency>
+            <groupId>org.vaadin.artur</groupId>
+            <artifactId>github-corner</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -103,12 +104,6 @@
                     <scanIntervalSeconds>1</scanIntervalSeconds>
                 </configuration>
             </plugin>
-
-            <!--
-                Take care of synchronizing java dependencies and imports in
-                package.json and main.js files.
-                It also creates webpack.config.js if not exists yet.
-            -->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
