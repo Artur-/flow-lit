@@ -16,6 +16,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <vaadin.version>14.0-SNAPSHOT</vaadin.version>
+        <flow.version>2.0-SNAPSHOT</flow.version>
     </properties>
 
     <repositories>
@@ -46,6 +47,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>flow-bom</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${flow.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
@@ -98,8 +106,8 @@
             </plugin>
             <plugin>
                 <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin.version}</version>
+                <artifactId>flow-maven-plugin</artifactId>
+                <version>${flow.version}</version>
                 <executions>
                     <execution>
                         <goals>
