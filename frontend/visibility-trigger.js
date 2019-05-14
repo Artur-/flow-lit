@@ -14,13 +14,6 @@ export class VisibilityTrigger {
       const entry = entries[0];
       if (entry.isIntersecting) {
         onVisible(triggerElement);
-
-        // Remove and add again to get an immediate event if the element is still visible
-        // The observer can be called after disconnect in certain cases.
-        if (this.observer) {
-          this.observer.unobserve(triggerElement);
-          this.observer.observe(triggerElement);
-        }
       }
     });
     this.observer.observe(triggerElement);
