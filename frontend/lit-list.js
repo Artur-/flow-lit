@@ -2,6 +2,7 @@ import { LitElement, html, css } from "lit-element";
 import { repeat } from "lit-html/directives/repeat";
 import "@vaadin/vaadin-button";
 import "j-elements";
+import { VisibilityTrigger } from "./visibility-trigger";
 
 class LitList extends LitElement {
   static get properties() {
@@ -30,13 +31,22 @@ class LitList extends LitElement {
             <span>${person.zip} ${person.city}</div>
             </j-card>          `
       )}
-      <vaadin-button @click="${e => this.$server.loadMore(this.persons.length)}"
+      <vaadin-button id="loadMore" @click="${e => this.$server.loadMore(this.persons.length)}"
         >Load more</vaadin-button
       >
     `;
   }
   addItems(items) {
     this.persons = [...this.persons, ...items];
+  }
+  firstUpdated(changedProperties) {
+    super.firstUpdated(changedProperties);
+    const trigger = new VisibilityTrigger();
+    const loadMore = this.shadowRoot.querySelector("#loadMore");
+    trigger.connect(loadMore, async () => {
+      this.$server.loadMore(this.persons.length);
+    });
+
   }
 }
 customElements.define("lit-list", LitList);
