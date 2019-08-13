@@ -15,8 +15,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.0-SNAPSHOT</vaadin.version>
-        <flow.version>2.0-SNAPSHOT</flow.version>
+        <vaadin.version>14.0.0</vaadin.version>
+        <flow.version>2.0.7</flow.version>
     </properties>
 
     <repositories>
@@ -75,12 +75,6 @@
             <version>2.0.2</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
@@ -95,13 +89,12 @@
         <defaultGoal>jetty:run</defaultGoal>
         <finalName>${project.artifactId}</finalName>
         <plugins>
-            <!-- We use jetty plugin, replace it with your favourite developing servlet container -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.15.v20190215</version>
                 <configuration>
-                    <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <scanIntervalSeconds>-1</scanIntervalSeconds>
                 </configuration>
             </plugin>
             <plugin>
@@ -111,8 +104,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>validate</goal>
-                            <goal>build-frontend</goal>
+                            <goal>prepare-frontend</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -123,7 +115,6 @@
 
     <profiles>
         <profile>
-            <!-- Production mode can be activated with either property or profile -->
             <id>production</id>
             <properties>
                 <vaadin.productionMode>true</vaadin.productionMode>
@@ -135,6 +126,21 @@
                     <artifactId>flow-server-production-mode</artifactId>
                 </dependency>
             </dependencies>
+            <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>flow-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build-frontend</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
