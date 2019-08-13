@@ -16,7 +16,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <vaadin.version>14.0.0</vaadin.version>
-        <flow.version>2.0.7</flow.version>
+        <flow.version>2.0.lit-SNAPSHOT</flow.version>
     </properties>
 
     <repositories>

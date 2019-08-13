@@ -31,7 +31,7 @@ class LitList extends LitElement {
             <span>${person.zip} ${person.city}</div>
             </j-card>          `
       )}
-      <vaadin-button id="loadMore" @click="${e => this.$server.loadMore(this.persons.length)}"
+      <vaadin-button id="loadMore" @click="${e => this.$server.loadMore()}"
         >Load more</vaadin-button
       >
     `;
@@ -44,7 +44,7 @@ class LitList extends LitElement {
     const trigger = new VisibilityTrigger();
     const loadMore = this.shadowRoot.querySelector("#loadMore");
     trigger.connect(loadMore, async () => {
-      this.$server.loadMore(this.persons.length);
+      this.$server.loadMore();
     });
 
   }

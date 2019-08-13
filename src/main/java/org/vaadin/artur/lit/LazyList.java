@@ -2,41 +2,32 @@ package org.vaadin.artur.lit;
 
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.flow.component.ClientCallable;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.component.littemplate.LitTemplate;
+import com.vaadin.flow.templatemodel.TemplateModel;
 
-import elemental.json.Json;
-import elemental.json.JsonValue;
+import org.vaadin.artur.lit.LazyList.Model;
 
 @Tag("lit-list")
 @JsModule("lit-list.js")
-@NpmPackage(value="lit-element", version="2.1.0")
-public class LazyList extends Component {
+public class LazyList extends LitTemplate<Model> {
 
-    public LazyList() {
-        getElement().setPropertyJson("persons",
-                toJson(PersonService.get().get(0, 10)));
+    public interface Model extends TemplateModel {
+        public void setPersons(List<Person> persons);
+
+        public List<Person> getPersons();
     }
 
-    private JsonValue toJson(List<Person> list) {
-        try {
-            return Json.instance()
-                    .parse(new ObjectMapper().writeValueAsString(list));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return Json.createArray();
-        }
+    public LazyList() {
+        getModel().setPersons(PersonService.get().get(0, 10));
     }
 
     @ClientCallable
-    public void loadMore(int offset) {
-        getElement().callJsFunction("addItems",
-                toJson(PersonService.get().get(offset, 10)));
+    public void loadMore() {
+        List<Person> persons = getModel().getPersons();
+        persons.addAll(PersonService.get().get(persons.size(), 10));
     }
 
 }
