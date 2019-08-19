@@ -38,7 +38,7 @@ class LazyList extends LitElement {
         <span>${person.zip} ${person.city}</div>
       </j-card> `
       )}
-      <vaadin-button id="loadMore" @click="${e => this.$server.loadMore()}">Load more</vaadin-button>
+      <vaadin-button id="loadMore" @click="${e => this.loadMore()}">Load more</vaadin-button>
     `;
   }
   firstUpdated(changedProperties) {
@@ -58,13 +58,15 @@ class LazyList extends LitElement {
 
     const trigger = new VisibilityTrigger();
     const loadMore = this.shadowRoot.querySelector("#loadMore");
-    trigger.connect(loadMore, async () => {
-      this.$server.loadMore();
+    trigger.connect(loadMore, () => {
+      this.loadMore();
     });
-    setTimeout(() => this.newItemsAvailable(), 100);
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('persons-available', { bubbles: true, detail: { persons: this.persons } }));
+    }, 100);
   }
-  newItemsAvailable() {
-    this.dispatchEvent(new CustomEvent("persons-available", { bubbles: true, detail: { persons: this.persons } }));
+  loadMore() {
+    this.dispatchEvent(new CustomEvent("load-persons", { bubbles: true }));
   }
   personSelected(person) {
     this.dispatchEvent(new CustomEvent("person-selected", { bubbles: true, detail: { person: person } }));
