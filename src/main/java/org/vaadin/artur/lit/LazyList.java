@@ -10,24 +10,25 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 
 import org.vaadin.artur.lit.LazyList.Model;
 
-@Tag("lit-list")
-@JsModule("lit-list.js")
+@Tag("lazy-list")
+@JsModule("./lazy-list.js")
 public class LazyList extends LitTemplate<Model> {
 
-    public interface Model extends TemplateModel {
-        public void setPersons(List<Person> persons);
+	public interface Model extends TemplateModel {
+		public void setPersons(List<Person> persons);
 
-        public List<Person> getPersons();
-    }
+		public List<Person> getPersons();
+	}
 
-    public LazyList() {
-        getModel().setPersons(PersonService.get().get(0, 10));
-    }
+	public LazyList() {
+		getModel().setPersons(PersonService.get().get(0, 10));
+	}
 
-    @ClientCallable
-    public void loadMore() {
-        List<Person> persons = getModel().getPersons();
-        persons.addAll(PersonService.get().get(persons.size(), 10));
-    }
+	@ClientCallable
+	public void loadMore() {
+		List<Person> persons = getModel().getPersons();
+		persons.addAll(PersonService.get().get(persons.size(), 10));
+		getElement().callJsFunction("newItemsAvailable");
+	}
 
 }
