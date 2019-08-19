@@ -1,4 +1,4 @@
-package org.vaadin.artur.lit;
+package org.vaadin.artur.lit.data;
 
 import java.util.ArrayList;
 import java.util.List;

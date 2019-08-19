@@ -1,4 +1,4 @@
-package org.vaadin.artur.lit;
+package org.vaadin.artur.lit.data;
 
 public class Person {
 	private int id;

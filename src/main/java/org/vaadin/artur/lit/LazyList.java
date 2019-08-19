@@ -3,6 +3,8 @@ package org.vaadin.artur.lit;
 import java.util.List;
 
 import org.vaadin.artur.lit.LazyList.Model;
+import org.vaadin.artur.lit.data.Person;
+import org.vaadin.artur.lit.data.PersonService;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
