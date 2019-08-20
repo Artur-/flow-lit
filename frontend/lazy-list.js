@@ -31,13 +31,13 @@ class LazyList extends LitElement {
       this.persons,
       person => person.id,
       (person, index) => html`
-      <j-card class=${classMap(person.classes)} @click="${e => this.personSelected(person)}">
+      <j-card class=${classMap(person.classes ? person.classes : {})} @click="${e => this.personSelected(person)}">
         <h3 slot="title">${person.firstName} ${person.lastName}</h3>
         <div>${person.company}</div>
         <div>${person.address}</div>
         <span>${person.zip} ${person.city}</div>
       </j-card> `
-      )}
+    )}
       <vaadin-button id="loadMore" @click="${e => this.loadMore()}">Load more</vaadin-button>
     `;
   }
