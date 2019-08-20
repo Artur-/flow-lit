@@ -22,7 +22,9 @@ public class MainView extends LitTemplate<TemplateModel> implements HasComponent
 
 	public MainView() {
 		super();
-		add(new GitHubCorner("https://github.com/Artur-/flow-lit"));
+		GitHubCorner gitHubCorner = new GitHubCorner("https://github.com/Artur-/flow-lit");
+		gitHubCorner.getElement().setAttribute("position", "left");
+		add(gitHubCorner);
 		HorizontalLayout horizontalLayout = new HorizontalLayout(new LazyList(), new MarkerMap());
 		horizontalLayout.setHeight("100vh");
 		add(horizontalLayout);
