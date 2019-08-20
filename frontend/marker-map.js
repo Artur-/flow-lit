@@ -51,6 +51,14 @@ export class MarkerMap extends LitElement {
     document.body.addEventListener("persons-available", e => {
       this.showMarkers(e.detail.persons);
     });
+    document.body.addEventListener("person-updated", e => {
+      const markerIndex = this.markers.findIndex(marker => marker.person.id == e.detail.person.id);
+      if (markerIndex >= 0) {
+        const marker = this.markers[markerIndex];
+        marker.person = e.detail.person;
+        marker.setLatLng({lat: marker.person.latitude, lng: marker.person.longitude});
+      }
+    });
     document.body.addEventListener("person-selected", e => {
       const person = e.detail.person;
       const marker = this.markers.find(marker => marker.person.id == person.id);

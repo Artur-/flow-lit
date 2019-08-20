@@ -71,5 +71,8 @@ class LazyList extends LitElement {
   personSelected(person) {
     this.dispatchEvent(new CustomEvent("person-selected", { bubbles: true, detail: { person: person } }));
   }
+  personUpdated(index) {
+    this.dispatchEvent(new CustomEvent("person-updated", { bubbles: true, detail: { person: this.persons[index] } }));
+  }
 }
 customElements.define("lazy-list", LazyList);

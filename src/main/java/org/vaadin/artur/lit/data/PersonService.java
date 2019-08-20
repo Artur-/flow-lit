@@ -2,9 +2,16 @@ package org.vaadin.artur.lit.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class PersonService {
+	private static final double LONG_MAX = 180.0;
+	private static final double LONG_MIN = -180.0;
+	private static final double LONG_RANGE = (LONG_MAX - LONG_MIN);
+	private static final double LAT_MAX = 90.0;
+	private static final double LAT_MIN = -90.0;
+	private static final double LAT_RANGE = (LAT_MAX - LAT_MIN);
 	private static final String[] firstNames = new String[] { "Adrienne", "Oren", "Mollie", "Yolanda", "Theodore",
 			"Dana", "Ralph", "Jackson", "Fredericka", "Hadley", "Amal", "Zachary", "Hashim", "Amal", "Molly", "Ramona",
 			"Casey", "Dorian", "Martin", "Martena", "Lucy", "Simon", "Amal", "Alexander", "Gloria", "Blake", "Blaze",
@@ -197,7 +204,7 @@ public class PersonService {
 	}
 
 	private PersonService() {
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 200; i++) {
 			items.add(create());
 		}
 	}
@@ -209,8 +216,8 @@ public class PersonService {
 		String zip = random(zips);
 		String street = random(streets);
 		String city = random(cities);
-		double longitude = random(-180.0, 180.0);
-		double latitude = random(-30.0, 80.0);
+		double longitude = random(LONG_MIN, LONG_MAX);
+		double latitude = random(LAT_MIN, LAT_MAX);
 		return new Person(personIndex++, firstName, lastName, company, street, zip, city, longitude, latitude);
 	}
 
@@ -230,5 +237,42 @@ public class PersonService {
 			throw new IllegalArgumentException();
 		}
 		return items.subList(startIndex, startIndex + count);
+	}
+
+	public void move(int personId, double dlat, double dlong) {
+		Optional<Person> person = getById(personId);
+		if (person.isPresent()) {
+			Person p = person.get();
+			double fromLat = p.getLatitude();
+			double fromLong = p.getLongitude();
+			double newLat = p.getLatitude() + dlat;
+			if (newLat < LAT_MIN) {
+				newLat += LAT_RANGE;
+			}
+			if (newLat > LAT_MAX) {
+				newLat -= LAT_RANGE;
+			}
+			person.get().setLatitude(newLat);
+
+			double newLong = p.getLongitude() + dlong;
+			if (newLong < LONG_MIN) {
+				newLong += LONG_RANGE;
+			}
+			if (newLong > LONG_MAX) {
+				newLong -= LONG_RANGE;
+			}
+			person.get().setLongitude(newLong);
+
+//			System.out.println("Moved person " + person.get().getId() + " from " + fromLat + "," + fromLong + " to "
+//					+ newLat + ", " + newLong);
+		}
+	}
+
+	public Optional<Person> getById(int personId) {
+		return items.stream().filter(p -> p.getId() == personId).findFirst();
+	}
+
+	public int getCount() {
+		return items.size();
 	}
 }
