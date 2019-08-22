@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit-element";
 
-class MainView extends LitElement {
+class ListMapView extends LitElement {
   render() {
     return html`
     <div>
@@ -9,4 +9,4 @@ class MainView extends LitElement {
     `;
   }
 }
-customElements.define("main-view", MainView);
+customElements.define("listmap-view", ListMapView);

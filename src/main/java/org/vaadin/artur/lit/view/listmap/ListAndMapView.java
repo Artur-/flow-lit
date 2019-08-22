@@ -11,8 +11,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Route(value = "", layout = MainLayout.class)
-@Tag("main-view")
-@JsModule("./main-view.js")
+@Tag("listmap-view")
+@JsModule("./listmap-view.js")
 public class ListAndMapView extends LitTemplate<TemplateModel> implements HasComponents {
 
 	public ListAndMapView() {
