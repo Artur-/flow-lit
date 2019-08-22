@@ -5,7 +5,6 @@ class MainView extends LitElement {
     return html`
     <div>
       <slot></slot>
-      <slot></slot>
     </div>
     `;
   }
