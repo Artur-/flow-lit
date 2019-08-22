@@ -1,17 +1,20 @@
-package org.vaadin.artur.lit;
+package org.vaadin.artur.lit.view.listmap;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.vaadin.artur.lit.LazyList.Model;
 import org.vaadin.artur.lit.ai.PersonMover;
 import org.vaadin.artur.lit.data.Person;
 import org.vaadin.artur.lit.data.PersonService;
+import org.vaadin.artur.lit.view.listmap.LazyList.Model;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.UIDetachedException;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.littemplate.LitTemplate;
+import com.vaadin.flow.templatemodel.Exclude;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("lazy-list")
@@ -21,6 +24,7 @@ public class LazyList extends LitTemplate<Model> {
 	public interface Model extends TemplateModel {
 		public void setPersons(List<Person> persons);
 
+		@Exclude({ "birthDate" })
 		public List<Person> getPersons();
 	}
 
@@ -44,8 +48,13 @@ public class LazyList extends LitTemplate<Model> {
 
 		PersonMover.get().addListener(e -> {
 			// This code is executed WITHOUT session lock
+			Optional<UI> ui = getUI();
+			if (!ui.isPresent()) {
+				e.unregisterListener();
+				return;
+			}
 			try {
-				getUI().get().access(() -> {
+				ui.get().access(() -> {
 					List<Person> persons = getModel().getPersons();
 					for (int i = 0; i < persons.size(); i++) {
 						Person p = persons.get(i);

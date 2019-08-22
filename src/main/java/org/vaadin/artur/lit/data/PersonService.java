@@ -1,5 +1,6 @@
 package org.vaadin.artur.lit.data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -214,19 +215,41 @@ public class PersonService {
 		String lastName = random(lastNames);
 		String company = random(companies);
 		String zip = random(zips);
-		String street = random(streets);
+		String address = random(streets);
 		String city = random(cities);
 		double longitude = random(LONG_MIN, LONG_MAX);
 		double latitude = random(LAT_MIN, LAT_MAX);
-		return new Person(personIndex++, firstName, lastName, company, street, zip, city, longitude, latitude);
+		LocalDate birthDate = randomDate();
+		Person p = new Person();
+		p.setId(personIndex++);
+		p.setFirstName(firstName);
+		p.setLastName(lastName);
+		p.setCompany(company);
+		p.setAddress(address);
+		p.setZip(zip);
+		p.setCity(city);
+		p.setLongitude(longitude);
+		p.setLatitude(latitude);
+		p.setBirthDate(birthDate);
+		return p;
 	}
 
 	private static double random(double min, double max) {
 		return random.nextDouble() * (max - min) + min;
 	}
 
+	private static int random(int min, int max) {
+		return random.nextInt(max - min) + min;
+	}
+
 	private static String random(String[] array) {
 		return array[random.nextInt(array.length)];
+	}
+
+	private static LocalDate randomDate() {
+		int year = random(1900, 2000);
+		int dayOfYear = random(1, 365);
+		return LocalDate.ofYearDay(year, dayOfYear);
 	}
 
 	public List<Person> get(int startIndex, int count) {

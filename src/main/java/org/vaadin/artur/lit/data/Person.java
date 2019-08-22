@@ -1,8 +1,11 @@
 package org.vaadin.artur.lit.data;
 
+import java.time.LocalDate;
+
 public class Person {
 	private int id;
 	private String firstName, lastName;
+	private LocalDate birthDate;
 	private String company;
 	private String address;
 	private String zip;
@@ -99,5 +102,14 @@ public class Person {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
 
 }

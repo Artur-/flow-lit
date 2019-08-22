@@ -1,4 +1,4 @@
-package org.vaadin.artur.lit;
+package org.vaadin.artur.lit.view.listmap;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;

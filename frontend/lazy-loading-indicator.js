@@ -14,14 +14,21 @@ class LazyLoadingIndicator extends LitElement {
 	firstUpdated(changedProperties) {
 		super.firstUpdated(changedProperties);
 		const notification = this.shadowRoot.querySelector("vaadin-notification");
+		this.onLoad = e => {
+			notification.opened = true;
+		};
+		this.onPersons = e => {
+			notification.opened = false;
+		};
 		const containerStyle = notification._container.style;
 
-		document.body.addEventListener("load-persons", e => {
-			notification.opened = true;
-		})
-		document.body.addEventListener("persons-available", e => {
-			notification.opened = false;
-		})
+		document.body.addEventListener("load-persons", this.onLoad);
+		document.body.addEventListener("persons-available", this.onPersons);
+	}
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		document.body.removeEventListener("load-persons", this.onLoad);
+		document.body.removeEventListener("persons-available", this.onPersons);
 	}
 }
 customElements.define("lazy-loading-indicator", LazyLoadingIndicator)
