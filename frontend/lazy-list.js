@@ -15,10 +15,11 @@ class LazyList extends LitElement {
     return css`
       :host {
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 1em;
       }
       j-card {
-        margin: 1em;
-        width: 400px;
+        width: 100%;
       }
       j-card.selected {
         background: #daa;
