@@ -105,9 +105,9 @@ export class MarkerMap extends LitElement {
       marker.addTo(this.map);
       let content = `
         Person: <b> ${item.firstName} ${item.lastName}</b><p>
-        Latitude: <b>${item.latitude}</b>
+        Latitude: <b>${item.latitude.toFixed(1)}</b>
         <br>
-        Longitude: <b>${item.longitude}</b>
+        Longitude: <b>${item.longitude.toFixed(1)}</b>
               </p>`;
       marker.bindPopup(content);
       marker.on('click', e => {
