@@ -1,50 +1,45 @@
 package org.vaadin.artur.lit.view.gridform;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import org.vaadin.artur.lit.MainLayout;
 import org.vaadin.artur.lit.data.Person;
 import org.vaadin.artur.lit.data.PersonService;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasEnabled;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.littemplate.LitTemplate;
-import com.vaadin.flow.component.polymertemplate.Id;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.provider.AbstractBackEndDataProvider;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Route(value = "grid-and-form", layout = MainLayout.class)
 @JsModule("./grid-form.js")
 @Tag("grid-form")
-public class GridAndForm extends LitTemplate<TemplateModel> implements HasComponents {
+public class GridAndForm extends Component implements HasComponents {
 
 	public Grid<Person> grid = new Grid<>(Person.class);
 
-	@Id
-	private TextField firstName;
-	@Id
-	private TextField lastName;
-	@Id
-	private DatePicker birthDate;
+	private VerticalLayout form = new VerticalLayout();
 
-	@Id
-	private Button save;
-	@Id
-	private Button cancel;
+	private TextField firstName = new TextField("First name");
+	private TextField lastName = new TextField("Last name");
+	private DatePicker birthDate = new DatePicker("Date of Birth");
 
-	private Binder<Person> binder;
+	private Button save = new Button("Save");
+	private Button cancel = new Button("Cancel");
+
+	private Binder<Person> binder = new Binder<>(Person.class);
 
 	private int editId;
 
@@ -68,9 +63,8 @@ public class GridAndForm extends LitTemplate<TemplateModel> implements HasCompon
 				setFieldsEnabled(true);
 			});
 		});
-		add(grid);
+		addToSlot("grid", grid);
 
-		binder = new Binder<Person>(Person.class);
 		binder.bindInstanceFields(this);
 		clear();
 
@@ -87,6 +81,15 @@ public class GridAndForm extends LitTemplate<TemplateModel> implements HasCompon
 		cancel.addClickListener(e -> {
 			clear();
 		});
+		form.add(firstName, lastName, birthDate, new HorizontalLayout(save, cancel));
+		addToSlot("form", form);
+	}
+
+	private void addToSlot(String slot, Component... components) {
+		for (Component c : components) {
+			c.getElement().setAttribute("slot", slot);
+			add(c);
+		}
 	}
 
 	private void clear() {

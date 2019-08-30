@@ -31,14 +31,26 @@ public class PersonMover implements Runnable {
 	public static class PersonChangeEvent extends ComponentEvent<Div> {
 
 		private int personId;
+		private double longitude;
+		private double latitude;
 
-		public PersonChangeEvent(int personId) {
+		public PersonChangeEvent(int personId, double longitude, double latitude) {
 			super(new Div(), false);
 			this.personId = personId;
+			this.longitude = longitude;
+			this.latitude = latitude;
 		}
 
 		public int getPersonId() {
 			return personId;
+		}
+
+		public double getLongitude() {
+			return longitude;
+		}
+
+		public double getLatitude() {
+			return latitude;
 		}
 	}
 
@@ -54,12 +66,13 @@ public class PersonMover implements Runnable {
 			}
 
 			int persons = service.getCount();
-			for (int i = 0; i < persons/3; i++) {
+			for (int i = 0; i < persons / 3; i++) {
 				int index = random(0, persons);
 				Person randomPerson = service.get(index, 1).get(0);
 				service.move(randomPerson.getId(), random(-2.0, 2.0), random(-2.0, 2.0));
 				try {
-					eventBus.fireEvent(new PersonChangeEvent(randomPerson.getId()));
+					eventBus.fireEvent(new PersonChangeEvent(randomPerson.getId(), randomPerson.getLongitude(),
+							randomPerson.getLatitude()));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

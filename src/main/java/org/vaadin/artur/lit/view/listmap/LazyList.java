@@ -6,40 +6,44 @@ import java.util.Optional;
 import org.vaadin.artur.lit.ai.PersonMover;
 import org.vaadin.artur.lit.data.Person;
 import org.vaadin.artur.lit.data.PersonService;
-import org.vaadin.artur.lit.view.listmap.LazyList.Model;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+import elemental.json.impl.JreJsonFactory;
+
+import com.google.gson.Gson;
 import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.UIDetachedException;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.littemplate.LitTemplate;
-import com.vaadin.flow.templatemodel.Exclude;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("lazy-list")
 @JsModule("./lazy-list.js")
-public class LazyList extends LitTemplate<Model> {
+public class LazyList extends Component {
 
-	public interface Model extends TemplateModel {
-		public void setPersons(List<Person> persons);
-
-		@Exclude({ "birthDate" })
-		public List<Person> getPersons();
-	}
+	private int loadedInBrowser = 0;
 
 	public LazyList() {
-		getModel().setPersons(PersonService.get().get(0, 10));
+		List<Person> persons = PersonService.get().get(0, 10);
+		loadedInBrowser = 10;
+		getElement().setPropertyJson("persons", toJson(persons));
 		getElement().addEventListener("load-persons", e -> {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e1) {
 			}
-			List<Person> persons = getModel().getPersons();
-			persons.addAll(PersonService.get().get(persons.size(), 10));
-			sendEvent();
+			loadedInBrowser += 10;
+			sendEvent(PersonService.get().get(loadedInBrowser, 10));
 		});
 
+	}
+
+	private JsonValue toJson(List<Person> persons) {
+		String personsJson = new Gson().toJson(persons);
+		return new JreJsonFactory().parse(personsJson);
 	}
 
 	@Override
@@ -55,19 +59,15 @@ public class LazyList extends LitTemplate<Model> {
 			}
 			try {
 				ui.get().access(() -> {
-					List<Person> persons = getModel().getPersons();
-					for (int i = 0; i < persons.size(); i++) {
-						Person p = persons.get(i);
-						if (p.getId() == e.getPersonId()) {
-							Person newPerson = PersonService.get().getById(e.getPersonId()).get();
-							Person modelPerson = getModel().getPersons().get(i);
-							modelPerson.setLatitude(newPerson.getLatitude());
-							modelPerson.setLongitude(newPerson.getLongitude());
-							sendUpdateEvent(i);
-							break;
-						}
+					List<Person> loadedPersons = PersonService.get().get(0, loadedInBrowser);
+					boolean personLoaded = loadedPersons.stream().anyMatch(person -> person.getId() == e.getPersonId());
+					if (personLoaded) {
+						JsonObject person = Json.createObject();
+						person.put("id", e.getPersonId());
+						person.put("longitude", e.getLongitude());
+						person.put("latitude", e.getLatitude());
+						getElement().callJsFunction("personUpdated", person);
 					}
-
 				});
 			} catch (UIDetachedException ee) {
 				e.unregisterListener();
@@ -76,14 +76,8 @@ public class LazyList extends LitTemplate<Model> {
 
 	}
 
-	private void sendUpdateEvent(int i) {
-		getElement().callJsFunction("personUpdated", i);
-
-	}
-
-	private void sendEvent() {
-		getElement().executeJs(
-				"this.dispatchEvent(new CustomEvent('persons-available', {bubbles: true, detail: {persons: this.persons}}))");
+	private void sendEvent(List<Person> list) {
+		getElement().callJsFunction("personsAdded", toJson(list));
 	}
 
 }

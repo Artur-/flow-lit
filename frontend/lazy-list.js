@@ -72,8 +72,20 @@ class LazyList extends LitElement {
   personSelected(person) {
     this.dispatchEvent(new CustomEvent("person-selected", { bubbles: true, detail: { person: person } }));
   }
-  personUpdated(index) {
-    this.dispatchEvent(new CustomEvent("person-updated", { bubbles: true, detail: { person: this.persons[index] } }));
+  personUpdated(personData) {
+    const person = this.persons.find(p => p.id == personData.id);
+    if (!person) {
+      return;
+    }
+    person.longitude = personData.longitude;
+    person.latitude = personData.latitude;
+
+    this.dispatchEvent(new CustomEvent("person-updated", { bubbles: true, detail: { person: person } }));
+  }
+  personsAdded(persons) {
+    this.persons.push(...persons);
+    this.requestUpdate("persons");
+		this.dispatchEvent(new CustomEvent('persons-available', {bubbles: true, detail: { persons: this.persons }}));
   }
 }
 customElements.define("lazy-list", LazyList);
