@@ -9,7 +9,7 @@ class ListMapView extends LitElement {
       .container {
         display: flex;
         flex-direction: row;
-        height: calc(100vh - 32px);
+        height: 100vh;
       }
 
       ::slotted(lazy-list) {
