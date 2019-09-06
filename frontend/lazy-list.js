@@ -3,8 +3,8 @@ import { repeat } from "lit-html/directives/repeat";
 import "@vaadin/vaadin-button";
 import "j-elements";
 import { VisibilityTrigger } from "./visibility-trigger";
-import { classMap } from 'lit-html/directives/class-map.js';
-
+import { classMap } from "lit-html/directives/class-map.js";
+import "a-avataaar";
 class LazyList extends LitElement {
   static get properties() {
     return {
@@ -24,16 +24,24 @@ class LazyList extends LitElement {
       j-card.selected {
         background: #daa;
       }
+      j-card [slot="title"] {
+        align-items: center;
+        display: flex;
+      }
     `;
   }
   render() {
     return html`
       ${repeat(
-      this.persons,
-      person => person.id,
-      (person, index) => html`
-      <j-card class=${classMap(person.classes ? person.classes : {})} @click="${e => this.personSelected(person)}">
-        <h3 slot="title">${person.firstName} ${person.lastName}</h3>
+        this.persons,
+        person => person.id,
+        (person, index) => html`
+      <j-card class=${classMap(
+        person.classes ? person.classes : {}
+      )} @click="${e => this.personSelected(person)}">
+        <h3 slot="title"><a-avataaar identifier="${person.firstName} ${
+          person.lastName
+        }"></a-avataaar>${person.firstName} ${person.lastName}</h3>
         <div>${person.company}</div>
         <div>${person.address}</div>
         <span>${person.zip} ${person.city}</div>
