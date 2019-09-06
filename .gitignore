@@ -17,5 +17,4 @@ bower_components
 # following files are generated/updated by flow-maven
 frontend/main.js
 src/main/webapp/build/stats.json
-webpack.config.js
 webpack.generated.js
