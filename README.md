@@ -14,7 +14,9 @@ Open http://localhost:8080/
 
 A live demo is running at https://labs.vaadin.com/flow-lit/
 
-# List & Map view
+---
+ 
+## List & Map view
 
 ![map-list](https://user-images.githubusercontent.com/260340/64474122-ae2d5d00-d178-11e9-87fc-9b20e22f4208.png)
 
@@ -47,7 +49,7 @@ The associated template ([listmap-view.js](https://github.com/Artur-/flow-lit/bl
   }
 ```
 
-## The List
+### The List
 LazyList shows a more complex use of Lit. The [server-side Java](https://github.com/Artur-/flow-lit/blob/master/src/main/java/org/vaadin/artur/lit/view/listmap/LazyList.java) class provides lazy-loading of the Person list (with a fake delay to make the laziness visible) and pushes movements of the currently visible persons. The Java class provides the data, while the Lit template does handles the rendering.
 
 ```java
@@ -93,5 +95,9 @@ This uses the Lit `repeat` directive to loop over all the available persons and 
 A click listener is added to each card using ```@click="${e ⇒ this.personSelected(person)}``` which calls the `personSelected` method with the selected person as an argument. This is used to highlight the person in the list and also to emit a `person-selected` event when a person is selected so the map can highlight the selected person without going through the server.
 
 If you are interested in more details about lazy loading, intersection observers etc, see the corresponding files in [frontend (client side)](https://github.com/Artur-/flow-lit/tree/master/frontend) and/or [src/main/java (server side)](https://github.com/Artur-/flow-lit/tree/master/src/main/java/org/vaadin/artur/lit).
+
+### The Map
+
+MarkerMap is another component fully defined by the Lit template in [marker-map.js](https://github.com/Artur-/flow-lit/blob/master/frontend/marker-map.js). It is an integration of the [Leaflet map](https://leafletjs.com) that plots the loaded persons locations on the map. It has no server side logic, instead it listens to browser events about person data being available or updated and then updates the map accordingly.
 
 
