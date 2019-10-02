@@ -8,7 +8,8 @@ import "a-avataaar";
 class LazyList extends LitElement {
   static get properties() {
     return {
-      persons: Array
+      persons: Array,
+      loading: Boolean
     };
   }
   static get styles() {
@@ -48,6 +49,7 @@ class LazyList extends LitElement {
       </j-card> `
     )}
       <vaadin-button id="loadMore" @click="${e => this.loadMore()}">Load more</vaadin-button>
+      <lazy-loading-indicator ?hidden="${!this.loading}"></lazy-loading-indicator>
     `;
   }
   firstUpdated(changedProperties) {
@@ -74,8 +76,13 @@ class LazyList extends LitElement {
       this.dispatchEvent(new CustomEvent('persons-available', { bubbles: true, detail: { persons: this.persons } }));
     }, 100);
   }
-  loadMore() {
-    this.dispatchEvent(new CustomEvent("load-persons", { bubbles: true }));
+  async loadMore() {
+    this.loading = true;
+    const persons = await this.$server.loadPersons(this.persons.length);
+    this.loading = false;
+    this.persons.push(...persons);
+    this.requestUpdate("persons");
+		this.dispatchEvent(new CustomEvent('persons-available', {bubbles: true, detail: { persons: this.persons }}));
   }
   personSelected(person) {
     this.dispatchEvent(new CustomEvent("person-selected", { bubbles: true, detail: { person: person } }));
@@ -89,11 +96,6 @@ class LazyList extends LitElement {
     person.latitude = personData.latitude;
 
     this.dispatchEvent(new CustomEvent("person-updated", { bubbles: true, detail: { person: person } }));
-  }
-  personsAdded(persons) {
-    this.persons.push(...persons);
-    this.requestUpdate("persons");
-		this.dispatchEvent(new CustomEvent('persons-available', {bubbles: true, detail: { persons: this.persons }}));
   }
 }
 customElements.define("lazy-list", LazyList);

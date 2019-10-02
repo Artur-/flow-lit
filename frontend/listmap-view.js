@@ -38,7 +38,6 @@ class ListMapView extends LitElement {
           <slot></slot>
           <marker-map></marker-map>
       </div>
-      <lazy-loading-indicator></lazy-loading-indicator>
     </div>
     `;
   }

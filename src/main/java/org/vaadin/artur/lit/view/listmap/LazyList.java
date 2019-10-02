@@ -8,12 +8,13 @@ import org.vaadin.artur.lit.data.Person;
 import org.vaadin.artur.lit.data.PersonService;
 
 import elemental.json.Json;
+import elemental.json.JsonArray;
 import elemental.json.JsonObject;
-import elemental.json.JsonValue;
 import elemental.json.impl.JreJsonFactory;
 
 import com.google.gson.Gson;
 import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
@@ -23,25 +24,25 @@ import com.vaadin.flow.component.dependency.JsModule;
 @Tag("lazy-list")
 @JsModule("./lazy-list.js")
 public class LazyList extends Component {
-
-	private int loadedInBrowser = 0;
+	private int loadedInBrowser;
 
 	public LazyList() {
 		List<Person> persons = PersonService.get().get(0, 10);
 		loadedInBrowser = 10;
 		getElement().setPropertyJson("persons", toJson(persons));
-		getElement().addEventListener("load-persons", e -> {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e1) {
-			}
-			loadedInBrowser += 10;
-			sendEvent(PersonService.get().get(loadedInBrowser, 10));
-		});
-
 	}
 
-	private JsonValue toJson(List<Person> persons) {
+	@ClientCallable
+	public JsonArray loadPersons(int offset) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+		}
+		loadedInBrowser = Math.max(loadedInBrowser, offset + 10);
+		return toJson(PersonService.get().get(offset, 10));
+	}
+
+	private JsonArray toJson(List<Person> persons) {
 		String personsJson = new Gson().toJson(persons);
 		return new JreJsonFactory().parse(personsJson);
 	}
@@ -74,10 +75,6 @@ public class LazyList extends Component {
 			}
 		});
 
-	}
-
-	private void sendEvent(List<Person> list) {
-		getElement().callJsFunction("personsAdded", toJson(list));
 	}
 
 }

@@ -2,33 +2,32 @@ import { LitElement, html, css } from "lit-element";
 import "@vaadin/vaadin-notification";
 
 class LazyLoadingIndicator extends LitElement {
-	render() {
-		return html`
-		<vaadin-notification duration=-1 position='middle' theme="primary large">
-			<template>
-				Loading server data slowly just so you can see this message and be annoyed...
-			</template>
-		</vaadin-notification>
-		`;
-	}
-	firstUpdated(changedProperties) {
-		super.firstUpdated(changedProperties);
-		const notification = this.shadowRoot.querySelector("vaadin-notification");
-		this.onLoad = e => {
-			notification.opened = true;
-		};
-		this.onPersons = e => {
-			notification.opened = false;
-		};
-		const containerStyle = notification._container.style;
-
-		document.body.addEventListener("load-persons", this.onLoad);
-		document.body.addEventListener("persons-available", this.onPersons);
-	}
-	disconnectedCallback() {
-		super.disconnectedCallback();
-		document.body.removeEventListener("load-persons", this.onLoad);
-		document.body.removeEventListener("persons-available", this.onPersons);
-	}
+  static get styles() {
+    return css`
+      :host([hidden]) {
+        display: none;
+      }
+      :host {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1.2em;
+        background: blue;
+        color: white;
+        border: 1px solid black;
+        z-index: 10000;
+      }
+    `;
+  }
+  render() {
+    return html`
+      <div>
+        Loading server data slowly just so you can see this message and be
+        annoyed...
+      </div>
+    `;
+  }
 }
-customElements.define("lazy-loading-indicator", LazyLoadingIndicator)
+customElements.define("lazy-loading-indicator", LazyLoadingIndicator);
