@@ -15,8 +15,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.0.7</vaadin.version>
-        <flow.version>2.1.clientCallableReturn-SNAPSHOT</flow.version>
+        <vaadin.version>14.1.0.alpha5</vaadin.version>
+        <flow.version>2.2-SNAPSHOT</flow.version>
     </properties>
 
     <repositories>
