@@ -15,8 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.1.0.alpha5</vaadin.version>
-        <flow.version>2.2-SNAPSHOT</flow.version>
+        <vaadin.version>14.2.0.alpha7</vaadin.version>
     </properties>
 
     <repositories>
@@ -47,13 +46,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>flow-bom</artifactId>
-                <type>pom</type>
-                <scope>import</scope>
-                <version>${flow.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
@@ -104,8 +96,8 @@
             </plugin>
             <plugin>
                 <groupId>com.vaadin</groupId>
-                <artifactId>flow-maven-plugin</artifactId>
-                <version>${flow.version}</version>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -135,8 +127,8 @@
                 <plugins>
                     <plugin>
                         <groupId>com.vaadin</groupId>
-                        <artifactId>flow-maven-plugin</artifactId>
-                        <version>${flow.version}</version>
+                        <artifactId>vaadin-maven-plugin</artifactId>
+                        <version>${vaadin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
