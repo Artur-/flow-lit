@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.vaadin.artur</groupId>
     <artifactId>flow-lit</artifactId>
@@ -9,19 +10,19 @@
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.2.0.alpha7</vaadin.version>
+        <vaadin.version>25.0-SNAPSHOT</vaadin.version>
     </properties>
 
-    <repositories>
+    <repositories>  
         <repository>
             <id>Vaadin Directory</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
         <repository>
             <id>vaadin-prereleases</id>
@@ -62,6 +63,11 @@
             <artifactId>vaadin-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.vaadin.artur</groupId>
             <artifactId>github-corner</artifactId>
             <version>2.0.2</version>
@@ -70,29 +76,15 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.5</version>
-        </dependency>
     </dependencies>
     <build>
         <defaultGoal>jetty:run</defaultGoal>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.15.v20190215</version>
-                <configuration>
-                    <scanIntervalSeconds>-1</scanIntervalSeconds>
-                </configuration>
+                <groupId>org.eclipse.jetty.ee10</groupId>
+                <artifactId>jetty-ee10-maven-plugin</artifactId>
+                <version>12.1.4</version>
             </plugin>
             <plugin>
                 <groupId>com.vaadin</groupId>
@@ -117,12 +109,6 @@
                 <vaadin.productionMode>true</vaadin.productionMode>
             </properties>
 
-            <dependencies>
-                <dependency>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>flow-server-production-mode</artifactId>
-                </dependency>
-            </dependencies>
             <build>
                 <plugins>
                     <plugin>

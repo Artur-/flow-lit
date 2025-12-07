@@ -1,9 +1,8 @@
-import { LitElement, html, css, customElement, property, PropertyValues, unsafeCSS } from "lit-element";
-import * as L from "leaflet/dist/leaflet-src.esm";
+import leafletCss from 'leaflet/dist/leaflet.css?raw';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import leafletCss from '!!raw-loader!leaflet/dist/leaflet.css';
-import ResizeObserver from 'resize-observer-polyfill';
+import * as L from "leaflet/dist/leaflet-src.esm";
+import { css, html, LitElement, unsafeCSS } from "lit";
 
 /* Workaround for fixing icons with webpack */
 const DefaultIcon = L.icon({

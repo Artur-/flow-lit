@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css } from "lit";
 import "./marker-map";
 import "./lazy-loading-indicator";
 import "github-corner";

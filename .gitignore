@@ -5,16 +5,14 @@
 .metadata/
 .project
 .settings/
+.vscode
 
 *.iml
 .DS_Store
 
-*.diff
+*~
 
 node_modules
-bower_components
 
-# following files are generated/updated by flow-maven
-frontend/main.js
-src/main/webapp/build/stats.json
-webpack.generated.js
+src/main/frontend/generated
+vite.generated.ts

@@ -1,5 +1,5 @@
-import { LitElement, html, css } from "lit-element";
-import "@vaadin/vaadin-notification";
+import { LitElement, html, css } from "lit";
+import "@vaadin/notification";
 
 class LazyLoadingIndicator extends LitElement {
   static get styles() {
